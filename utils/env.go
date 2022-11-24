@@ -1,4 +1,4 @@
-package main
+package utils
 
 import (
 	"fmt"
@@ -11,6 +11,7 @@ type Env struct {
 	Mode string
 	Port string
 	Desc string
+	Host string
 }
 
 func GetEnv() (Env, error) {
@@ -35,6 +36,7 @@ func GetEnv() (Env, error) {
 		Mode: os.Getenv("mode"),
 		Port: os.Getenv("port"),
 		Desc: os.Getenv("desc"),
+		Host: os.Getenv("host"),
 	}, nil
 
 }

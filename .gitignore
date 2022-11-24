@@ -7,6 +7,7 @@
 *.dll
 *.so
 *.dylib
+/app
 
 # Test binary, built with `go test -c`
 *.test
@@ -25,4 +26,5 @@ go.work
 # air
 tmp
 .idea
-/app
+statics
+config/*.config.go

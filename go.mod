@@ -4,6 +4,7 @@ go 1.19
 
 require (
 	github.com/gin-gonic/gin v1.8.1
+	github.com/jaevor/go-nanoid v1.3.0
 	github.com/joho/godotenv v1.4.0
 )
 
