@@ -2,6 +2,7 @@ package upload
 
 import (
 	"fmt"
+	"github.com/CiroLee/go-static-server/config"
 	"github.com/CiroLee/go-static-server/utils"
 	"github.com/jaevor/go-nanoid"
 	"log"
@@ -18,6 +19,12 @@ const basePath = "/statics/images"
 
 func ImageUploadHandler(ctx *gin.Context) {
 	env, _ := utils.GetEnv()
+	var host string
+	if env.Mode == "debug" {
+		host = config.DevHost
+	} else {
+		host = config.ProdHost
+	}
 	file, err := ctx.FormFile("file")
 	if err != nil {
 		log.Fatal(err)
@@ -41,7 +48,6 @@ func ImageUploadHandler(ctx *gin.Context) {
 	}
 	// 创建唯一文件名
 	createNanoId, _ := nanoid.Standard(21)
-	fmt.Println(file.Filename)
 	// nanoid + 图片后缀
 	filename := createNanoId() + fmt.Sprintf("%v", fileExt)
 	dst := path.Join(savedPath, filename)
@@ -51,8 +57,13 @@ func ImageUploadHandler(ctx *gin.Context) {
 		response.Fail(ctx, response.SavedError, 0)
 		return
 	}
-
+	var url string
+	if env.Mode == "debug" {
+		url = path.Join(fmt.Sprintf("%v:%v", host, env.Port), basePath, filename)
+	} else {
+		url = path.Join(fmt.Sprintf("%v", host), basePath, filename)
+	}
 	response.Success(ctx, map[string]string{
-		"url": path.Join(fmt.Sprintf("%v:%v", env.Host, env.Port), basePath, filename),
+		"url": url,
 	}, 0)
 }
