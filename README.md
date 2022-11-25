@@ -8,11 +8,6 @@ go mod tidy
 # debug
 go run .
 ```
-
-# build
-```shell
-go build
-```
 # build
 ```shell
 # build for linux
