@@ -22,6 +22,12 @@ var UnAuthorization = Res{
 	Msg:  "UnAuthorization",
 }
 
+var EmptyList = Res{
+	Code: -1003,
+	Msg:  "no data",
+	Data: []string{},
+}
+
 func Success(ctx *gin.Context, data any, status int) {
 	var s = http.StatusOK
 	if status != 0 {

@@ -1,8 +1,8 @@
 package main
 
 import (
+	"github.com/CiroLee/go-static-server/images"
 	"github.com/CiroLee/go-static-server/middlemare"
-	"github.com/CiroLee/go-static-server/upload"
 	"github.com/CiroLee/go-static-server/utils"
 	"github.com/gin-gonic/gin"
 	"log"
@@ -19,7 +19,11 @@ func main() {
 	router.MaxMultipartMemory = 10 << 20 // 10Mib
 	router.StaticFS("/statics", http.Dir("./statics"))
 
-	router.POST("/statics/api/upload", middlemare.Authorization(), upload.ImageUploadHandler)
+	imagesGroup := router.Group("/statics/api/images")
+	{
+		imagesGroup.POST("/upload", middlemare.Authorization(), images.ImageUploadHandler)
+		imagesGroup.POST("/list", images.ImageListHandler)
+	}
 
 	// listen on port
 	err := router.Run(":" + env.Port)

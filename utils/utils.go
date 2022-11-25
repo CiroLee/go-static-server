@@ -1,6 +1,11 @@
 package utils
 
-import "os"
+import (
+	"fmt"
+	"github.com/CiroLee/go-static-server/config"
+	"os"
+	"path"
+)
 
 func PathExists(path string) (bool, error) {
 	_, err := os.Stat(path)
@@ -11,4 +16,12 @@ func PathExists(path string) (bool, error) {
 		return false, nil
 	}
 	return false, err
+}
+
+func GetUrlByEnv(basePath, filename string) string {
+	env, _ := GetEnv()
+	if env.Mode == "debug" {
+		return path.Join(fmt.Sprintf("%v:%v", config.DevHost, env.Port), basePath, filename)
+	}
+	return path.Join(config.ProdHost, basePath, filename)
 }

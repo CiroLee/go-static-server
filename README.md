@@ -13,8 +13,9 @@ go run .
 ```shell
 go build
 ```
-# deploy
+# build
 ```shell
-chmod +x ./deploy.sh
-./deploy.sh
+# build for linux
+chmod +x ./build.sh
+./build.sh
 ```
