@@ -1,7 +1,6 @@
 package utils
 
 import (
-	"fmt"
 	"github.com/joho/godotenv"
 	"log"
 	"os"
@@ -28,8 +27,6 @@ func GetEnv() (Env, error) {
 	if err != nil {
 		return Env{}, nil
 	}
-
-	fmt.Printf("evn desc: %v\n", os.Getenv("desc"))
 
 	return Env{
 		Mode: os.Getenv("mode"),

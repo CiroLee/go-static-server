@@ -23,6 +23,7 @@ func main() {
 	{
 		imagesGroup.POST("/upload", middlemare.Authorization(), images.ImageUploadHandler)
 		imagesGroup.POST("/list", images.ImageListHandler)
+		imagesGroup.POST("/delete", middlemare.Authorization(), images.ImageDeleteHandler)
 	}
 
 	// listen on port

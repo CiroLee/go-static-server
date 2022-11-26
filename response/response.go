@@ -28,6 +28,11 @@ var EmptyList = Res{
 	Data: []string{},
 }
 
+var DeleteFail = Res{
+	Code: -1005,
+	Msg:  "delete failed",
+}
+
 func Success(ctx *gin.Context, data any, status int) {
 	var s = http.StatusOK
 	if status != 0 {
@@ -62,4 +67,12 @@ func WrongFormat(ctx *gin.Context, data string) {
 
 func UnAuth(ctx *gin.Context) {
 	Fail(ctx, UnAuthorization, http.StatusUnauthorized)
+}
+
+func WrongParams(ctx *gin.Context, err error) {
+	Fail(ctx, Res{
+		Code: -1004,
+		Msg:  "invalid params",
+		Data: err.Error(),
+	}, 0)
 }
