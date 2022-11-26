@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"github.com/CiroLee/go-static-server/config"
 	"os"
-	"path"
 )
 
 func PathExists(path string) (bool, error) {
@@ -21,7 +20,7 @@ func PathExists(path string) (bool, error) {
 func GetUrlByEnv(basePath, filename string) string {
 	env, _ := GetEnv()
 	if env.Mode == "debug" {
-		return path.Join(fmt.Sprintf("%v:%v", config.DevHost, env.Port), basePath, filename)
+		return fmt.Sprintf("%v:%v%v/%v", config.DevHost, env.Port, basePath, filename)
 	}
-	return path.Join(config.ProdHost, basePath, filename)
+	return fmt.Sprintf("%v%v/%v", config.ProdHost, basePath, filename)
 }

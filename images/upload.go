@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"github.com/CiroLee/go-static-server/utils"
 	"github.com/jaevor/go-nanoid"
-	"log"
 	"os"
 	"path"
 	"regexp"
@@ -19,7 +18,7 @@ import (
 func ImageUploadHandler(ctx *gin.Context) {
 	file, err := ctx.FormFile("file")
 	if err != nil {
-		log.Fatal(err)
+		panic(err)
 	}
 	header := file.Header
 	fileType := header["Content-Type"][0]
