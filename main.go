@@ -16,7 +16,7 @@ func main() {
 	}
 	gin.SetMode(env.Mode)
 	router := gin.Default()
-	router.MaxMultipartMemory = 10 << 20 // 10Mib
+	router.MaxMultipartMemory = 1000 << 20 // 100Mib
 	router.StaticFS("/statics", http.Dir("./statics"))
 
 	imagesGroup := router.Group("/statics/api/images")

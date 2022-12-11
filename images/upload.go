@@ -17,6 +17,7 @@ import (
 
 func ImageUploadHandler(ctx *gin.Context) {
 	file, err := ctx.FormFile("file")
+	folder := ctx.DefaultPostForm("folder", "")
 	if err != nil {
 		panic(err)
 	}
@@ -30,7 +31,7 @@ func ImageUploadHandler(ctx *gin.Context) {
 		return
 	}
 	// 检查存储目录是否存在，不存在则创建
-	savedPath := path.Join(".", BasePath)
+	savedPath := path.Join(".", BasePath, folder)
 	if ok, _ := utils.PathExists(savedPath); !ok {
 		err := os.MkdirAll(savedPath, os.ModePerm)
 		if err != nil {
@@ -50,6 +51,6 @@ func ImageUploadHandler(ctx *gin.Context) {
 	}
 
 	response.Success(ctx, map[string]string{
-		"url": utils.GetUrlByEnv(BasePath, filename),
+		"url": utils.GetUrlByEnv(path.Join(BasePath, folder), filename),
 	}, 0)
 }

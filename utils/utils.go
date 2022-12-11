@@ -17,10 +17,10 @@ func PathExists(path string) (bool, error) {
 	return false, err
 }
 
-func GetUrlByEnv(basePath, filename string) string {
+func GetUrlByEnv(filePath, filename string) string {
 	env, _ := GetEnv()
 	if env.Mode == "debug" {
-		return fmt.Sprintf("%v:%v%v/%v", config.DevHost, env.Port, basePath, filename)
+		return fmt.Sprintf("%v:%v%v/%v", config.DevHost, env.Port, filePath, filename)
 	}
-	return fmt.Sprintf("%v%v/%v", config.ProdHost, basePath, filename)
+	return fmt.Sprintf("%v%v/%v", config.ProdHost, filePath, filename)
 }
