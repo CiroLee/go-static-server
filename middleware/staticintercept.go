@@ -7,7 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func InterceptorMiddleware() gin.HandlerFunc {
+func StaticInterceptor() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		// 拦截get请求
 		if ctx.Request.Method == http.MethodGet {
