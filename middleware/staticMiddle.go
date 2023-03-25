@@ -9,16 +9,14 @@ import (
 
 func InterceptorMiddleware() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		if ctx.Request.Method != http.MethodGet {
-			ctx.AbortWithStatus(http.StatusForbidden)
-			return
-		}
-		path := ctx.Param("filepath")
-
-		fileName := strings.TrimSuffix(path, "/")
-		if !strings.Contains(fileName, ".") {
-			ctx.AbortWithStatus(http.StatusForbidden)
-			return
+		// 拦截get请求
+		if ctx.Request.Method == http.MethodGet {
+			path := ctx.Param("filepath")
+			fileName := strings.TrimSuffix(path, "/")
+			if !strings.Contains(fileName, ".") {
+				ctx.AbortWithStatus(http.StatusForbidden)
+				return
+			}
 		}
 		ctx.Next()
 	}
