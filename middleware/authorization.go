@@ -1,4 +1,4 @@
-package middlemare
+package middleware
 
 import (
 	"github.com/CiroLee/go-static-server/config"
@@ -18,6 +18,5 @@ func Authorization() gin.HandlerFunc {
 		}
 		response.UnAuth(ctx)
 		ctx.Abort()
-		return
 	}
 }

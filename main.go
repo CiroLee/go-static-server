@@ -1,12 +1,13 @@
 package main
 
 import (
-	"github.com/CiroLee/go-static-server/images"
-	"github.com/CiroLee/go-static-server/middlemare"
-	"github.com/CiroLee/go-static-server/utils"
-	"github.com/gin-gonic/gin"
 	"log"
 	"net/http"
+
+	"github.com/CiroLee/go-static-server/images"
+	"github.com/CiroLee/go-static-server/middleware"
+	"github.com/CiroLee/go-static-server/utils"
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
@@ -17,13 +18,14 @@ func main() {
 	gin.SetMode(env.Mode)
 	router := gin.Default()
 	router.MaxMultipartMemory = 1000 << 20 // 100Mib
+	router.Use(middleware.InterceptorMiddleware())
 	router.StaticFS("/statics", http.Dir("./statics"))
 
 	imagesGroup := router.Group("/statics/api/images")
 	{
-		imagesGroup.POST("/upload", middlemare.Authorization(), images.ImageUploadHandler)
+		imagesGroup.POST("/upload", middleware.Authorization(), images.ImageUploadHandler)
 		imagesGroup.POST("/list", images.ImageListHandler)
-		imagesGroup.POST("/delete", middlemare.Authorization(), images.ImageDeleteHandler)
+		imagesGroup.POST("/delete", middleware.Authorization(), images.ImageDeleteHandler)
 	}
 
 	// listen on port
